@@ -33,7 +33,7 @@ def home(request):
 
 @login_required
 def publish(request):
-    form = ArticleForm()
+    form = ArticleForm(initial={"author":request.user})
     return render(request, 'publish.html', {'form': form})
 
 @login_required
@@ -96,7 +96,6 @@ def edit_article(request, article_id):
             return redirect('personal')
     else:
         form = ArticleForm(instance=article)
-
     context = {
         'form': form,
         'article': article,

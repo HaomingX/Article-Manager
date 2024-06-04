@@ -21,3 +21,9 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = ['title', 'author', 'summary', 'keywords', 'content']  # 不包含 publish_time
 
+    def __init__(self, *args, **kwargs):
+        super(ArticleForm, self).__init__(*args, **kwargs)
+        # 设置 author 字段的默认值为当前登录的用户
+        self.fields['author'].initial = self.instance.author if self.instance else None
+        self.fields['author'].readonly=True
+

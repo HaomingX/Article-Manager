@@ -6,7 +6,6 @@ $(document).ready(function(){
         if (fullContentDiv.is(":visible")) {
             fullContentDiv.slideUp();
         } else {
-            print(articleId);
             $.ajax({
                 url: "/article_content/" + articleId + "/",
                 method: "GET",

@@ -87,9 +87,9 @@
                     <p>{{ article.content|truncatewords:30 }}</p>
                     <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>
                     <a href="{% url 'edit_article' article.id %}" class="btn btn-info">Edit</a>
-                    <form method="post" action="{% url 'delete_article' article.id %}" style="display:inline;" >
+                    <form method="post" action="{% url 'delete_article' article.id %}" onsubmit="return confirmDelete();"style="display:inline;" >
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger" onsubmit="return confirmDelete();">Delete</button>
+                        <button type="submit" class="btn btn-danger" >Delete</button>
                     </form>
                     <div class="article-content" id="article-content-{{ article.id }}" style="display: none;"></div>
                     <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">
