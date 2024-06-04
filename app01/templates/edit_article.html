@@ -12,7 +12,28 @@
         <h1 class="text-center">Edit Article</h1>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_title">Title</label>
+                <input type="text" class="form-control" id="id_title" name="title" value="{{ form.title.value }}">
+            </div>
+            <div class="form-group">
+                <label for="id_author">Author</label>
+                 <!-- 使用 Django 的表单字段渲染，并通过 readonly 属性设置为只读 -->
+                <input type="text" class="form-control" id="id_author" name="author" value="{{ form.author.value }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="id_summary">Summary</label>
+                <textarea class="form-control" id="id_summary" name="summary" rows="3">{{ form.summary.value }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="id_keywords">Keywords</label>
+                <input type="text" class="form-control" id="id_keywords" name="keywords"  value="{{ form.keywords.value }}">
+            </div>
+            <div class="form-group">
+                <label for="id_content">Content</label>
+                <textarea class="form-control" id="id_content" name="content" rows="10">{{ form.content.value }}</textarea>
+            </div>
             <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
         </form>
     </div>
