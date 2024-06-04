@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Manager</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 10px;
+        }
+
+        .top-buttons {
+            margin: 10px 0;
+            text-align: center;
+        }
+        .top-buttons button {
+            margin: 0 5px;
+        }
+
+        .article-section {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #80bdff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-buttons">
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">Homepage</a>
+        <a href="#" class="btn btn-outline-secondary">History</a>
+        <a href="{% url 'publish' %}" class="btn btn-outline-success">Publish</a>
+        <a href="#" class="btn btn-outline-info float-right">Personal</a>
+    </div>
+
+    <div class="text-center my-4">
+        <h1>Article Manager</h1>
+        <p id="dateTotal">Date: {{ current_date }} | Total: {{ total_articles }}</p>
+    </div>
+
+    <!-- Search Section -->
+    <div class="my-4">
+        <h3>Search Articles</h3>
+        <form class="form-inline">
+            <div class="form-group mb-2 mr-2">
+                <label for="searchKeyword" class="sr-only">Keyword</label>
+                <input type="text" class="form-control" id="searchKeyword" placeholder="Keyword">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
+    </div>
+
+    <!-- Articles Display -->
+    {% for article in articles %}
+    <div class="article-section border p-3">
+        <div class="form-group">
+            <label for="articleTitle{{ forloop.counter }}">Article Title</label>
+            <textarea class="form-control" id="articleTitle{{ forloop.counter }}" rows="1" readonly>{{ article.title }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="author{{ forloop.counter }}">Author</label>
+            <textarea class="form-control" id="author{{ forloop.counter }}" rows="1" readonly>{{ article.author }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="summary{{ forloop.counter }}">Summary of the article/Few words before the article</label>
+            <textarea class="form-control" id="summary{{ forloop.counter }}" rows="3" readonly>{{ article.summary }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="keywords{{ forloop.counter }}">Key words</label>
+            <textarea class="form-control" id="keywords{{ forloop.counter }}" rows="1" readonly>{{ article.keywords }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="publishTime{{ forloop.counter }}">Publish time</label>
+            <textarea class="form-control" id="publishTime{{ forloop.counter }}" rows="1" readonly>{{ article.publish_time }}</textarea>
+        </div>
+        <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read</button>
+        <button class="btn btn-secondary">LLM_explain</button>
+        <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">
+            <!-- 内容将通过AJAX加载 -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="../static/js/myScript.js"></script>
+</body>
+</html>

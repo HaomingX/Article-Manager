@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/Article-Manager.iml" filepath="$PROJECT_DIR$/.idea/Article-Manager.iml" />
+=======
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/Article-Manager.iml" filepath="$PROJECT_DIR$/.idea/Article-Manager.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/Article_Manager.iml" filepath="$PROJECT_DIR$/.idea/Article_Manager.iml" />
+>>>>>>> 9ea78d5 (sprint1 demo1)
+>>>>>>> 9833b5d (sprint1 demo1)
+    </modules>
+  </component>
+</project>

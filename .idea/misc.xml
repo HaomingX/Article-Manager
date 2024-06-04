@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 9833b5d (sprint1 demo1)
+  <component name="Black">
+    <option name="sdkName" value="Python 3.10 (Article-Manager)" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (Article-Manager)" project-jdk-type="Python SDK" />
+<<<<<<< HEAD
+=======
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (Article_Manager)" project-jdk-type="Python SDK" />
+>>>>>>> 9ea78d5 (sprint1 demo1)
+>>>>>>> 9833b5d (sprint1 demo1)
+</project>
