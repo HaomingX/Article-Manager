@@ -54,12 +54,42 @@
 </head>
 <body>
 
-<div class="container">
+
+
+<div class="container mt-4">
     <div class="top-buttons">
-        <a href="{% url 'home' %}" class="btn btn-outline-primary">Homepage</a>
-        <a href="#" class="btn btn-outline-secondary">History</a>
-        <a href="{% url 'publish' %}" class="btn btn-outline-success">Publish</a>
-        <a href="#" class="btn btn-outline-info float-right">Personal</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'home' %}">Homepage</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="#" class="navbar-brand">History</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'publish' %}">Publish</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'personal' %}">Personal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
     </div>
 
     <div class="text-center my-4">
@@ -102,7 +132,7 @@
             <label for="publishTime{{ forloop.counter }}">Publish time</label>
             <textarea class="form-control" id="publishTime{{ forloop.counter }}" rows="1" readonly>{{ article.publish_time }}</textarea>
         </div>
-        <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read</button>
+        <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>
         <button class="btn btn-secondary">LLM_explain</button>
         <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">
             <!-- 内容将通过AJAX加载 -->
