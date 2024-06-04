@@ -6,6 +6,7 @@ $(document).ready(function(){
         if (fullContentDiv.is(":visible")) {
             fullContentDiv.slideUp();
         } else {
+            print(articleId);
             $.ajax({
                 url: "/article_content/" + articleId + "/",
                 method: "GET",
@@ -24,3 +25,7 @@ $(document).ready(function(){
         }
     });
 });
+
+function confirmDelete() {
+    return confirm('Are you sure you want to delete this article?');
+}
