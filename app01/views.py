@@ -64,7 +64,12 @@ def personal(request):
         user_form = UserUpdateForm(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
+            # 更新该用户的所有文章作者信息
+            for article in user_articles:
+                article.author = request.user.username
+                article.save()
             messages.success(request, f'Your account has been updated!')
+            #print('Your account has been updated!')
             return redirect('personal')
     else:
         user_form = UserUpdateForm(instance=request.user)

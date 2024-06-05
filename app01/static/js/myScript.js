@@ -28,3 +28,6 @@ $(document).ready(function(){
 function confirmDelete() {
     return confirm('Are you sure you want to delete this article?');
 }
+function confirmUpdate() {
+    return confirm('Are you sure you want to Update your information?');
+}
