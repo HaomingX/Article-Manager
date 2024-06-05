@@ -55,7 +55,6 @@
 <body>
 
 
-
 <div class="container mt-4">
     <div class="top-buttons">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -131,6 +130,10 @@
         <div class="form-group">
             <label for="publishTime{{ forloop.counter }}">Publish time</label>
             <textarea class="form-control" id="publishTime{{ forloop.counter }}" rows="1" readonly>{{ article.publish_time }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="category{{ forloop.counter }}">Category</label>
+            <textarea class="form-control" id="category{{ forloop.counter }}" rows="1" readonly>{{ article.category.name }}</textarea>
         </div>
         <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>
         <button class="btn btn-secondary">LLM_explain</button>

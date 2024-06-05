@@ -1,0 +1,18 @@
+.dropdown-container {
+    display: flex; /* 使用Flexbox布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: space-between; /* 元素之间的间隔平均分布 */
+}
+
+.dropdown-group {
+    flex: 1; /* 每个下拉列表组占据等宽的空间 */
+    display: flex; /* 每个下拉列表组也使用Flexbox布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: flex-end; /* 按钮位于右侧 */
+    margin: 0 10px; /* 给每个下拉列表组添加一些间距 */
+}
+
+/* 可以为select-control添加一些样式，以适应布局 */
+.select-control {
+    margin-right: 10px; /* 给下拉框和按钮之间添加一些间距 */
+}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ArticleForm,UserRegisterForm, UserUpdateForm
+from .forms import ArticleForm,UserRegisterForm, UserUpdateForm,CategoryForm
 from .models import Article
 import datetime
 from django.http import JsonResponse, HttpResponseNotFound
@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
-
+from .models import Category
 
 def register(request):
     if request.method == 'POST':
@@ -33,8 +33,40 @@ def home(request):
 
 @login_required
 def publish(request):
-    form = ArticleForm(initial={"author":request.user})
-    return render(request, 'publish.html', {'form': form})
+    if request.method == 'GET' and 'parentId' in request.GET:
+        parent_id = request.GET['parentId']
+        subcategories = Category.objects.filter(parent_id=parent_id)
+        data = [{'id': subcategory.id, 'name': subcategory.name} for subcategory in subcategories]
+        return JsonResponse(data, safe=False)
+
+    if request.method == 'POST':
+        if 'name' in request.POST and 'level' in request.POST:
+            name = request.POST['name']
+            level = int(request.POST['level'])
+            parent_id = request.POST.get('parent')
+            if(parent_id=='null'):
+                new_category = Category.objects.create(name=name, level=level, parent=None)
+            else:
+                parent = Category.objects.get(id=parent_id)
+                new_category = Category.objects.create(name=name, level=level, parent=parent)
+            return JsonResponse({'id': new_category.id, 'name': new_category.name})
+        article_form = ArticleForm(request.POST, initial={"author": request.user})
+
+        if article_form.is_valid():
+            article_form.save()
+            messages.success(request, 'Your article has been published!')
+            return redirect('personal')
+    else:
+        article_form = ArticleForm(initial={"author": request.user})
+
+    categories = Category.objects.all()
+    context = {
+        'article_form': article_form,
+        'categories': categories,
+    }
+    # print(article_form)
+    return render(request, 'publish.html', context)
+
 
 @login_required
 def submit_article(request):

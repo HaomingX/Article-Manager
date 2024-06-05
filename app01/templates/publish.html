@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publish Article</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/static/css/article.css"></script>
+    <link rel="stylesheet" href="/static/css/article.css?version=1.0.1">
+    <script src="/static/js/category.js?version=1.0.0"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -19,7 +20,7 @@
             <div class="form-group">
                 <label for="id_author">Author</label>
                  <!-- 使用 Django 的表单字段渲染，并通过 readonly 属性设置为只读 -->
-                <input type="text" class="form-control" id="id_author" name="author" value="{{ form.author.value }}" readonly>
+                <input type="text" class="form-control" id="id_author" name="author" value="{{ article_form.author.value }}" readonly>
             </div>
             <div class="form-group">
                 <label for="id_summary">Summary</label>
@@ -33,10 +34,40 @@
                 <label for="id_content">Content</label>
                 <textarea class="form-control" id="id_content" name="content" rows="10"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            <div class="dropdown-container">
+                <div class="dropdown-group">
+                    <label for="id_category1">Category1</label>
+                    <select name="category1" id="id_category1" class="select-control"  required onchange="updateCategory2();updateCategory3()">
+                        <option value="" disabled selected>Select Category1</option>
+                        {% for category in categories %}
+                            {% if category.level == 1 %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <button type="button" onclick="addCategory(1)">Add</button>
+                </div>
+
+                <div class="dropdown-group">
+                    <label for="id_category2">Category2</label>
+                    <select name="category" id="id_category2" class="select-control"  required onclick="updateCategory3()" onchange="updateCategory3()">
+                        <option value="" disabled selected>Select Category2</option>
+                        <!-- 此处选项将由 JavaScript 动态填充 -->
+                    </select>
+                    <button type="button" onclick="addCategory(2)">Add</button>
+                </div>
+                <div class="dropdown-group">
+                    <label for="id_category3">Category2</label>
+                    <select name="category" id="id_category3" class="select-control" required>
+                        <option value="" disabled selected>Select Category3</option>
+                        <!-- 此处选项将由 JavaScript 动态填充 -->
+                    </select>
+                    <button type="button" onclick="addCategory(3)">Add</button>
+                </div>
+            </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

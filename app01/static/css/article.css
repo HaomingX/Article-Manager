@@ -1,40 +1,71 @@
+body{
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 1200px;
+    width: 100%;
+}
 
-        .container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 1200px;
-            width: 100%;
-        }
+h1 {
+    margin-bottom: 20px;
+}
 
-        h1 {
-            margin-bottom: 20px;
-        }
+.form-group {
+    margin-bottom: 15px;
+}
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+.btn {
+    transition: background-color 0.3s, transform 0.3s;
+}
 
-        .btn {
-            transition: background-color 0.3s, transform 0.3s;
-        }
+.btn:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
 
-        .btn:hover {
-            background-color: #007bff;
-            color: white;
-            transform: scale(1.05);
-        }
+.form-control:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #80bdff;
+}
+.dropdown-container {
+    display: flex;
+    /*flex-direction: column; !* 使下拉框组垂直排列 *!*/
+    gap: 50px; /* 添加下拉框组之间的间距 */
+    margin-bottom: 15px;
+}
 
-        .form-control:focus {
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            border-color: #80bdff;
-        }
+.dropdown-group {
+    display: flex;
+    align-items: center; /* 垂直居中对齐下拉框和按钮 */
+}
+
+.dropdown-group label {
+    margin-right: 10px; /* 标签和下拉框之间的间距 */
+}
+
+.select-control {
+    width: 200px; /* 设置下拉框宽度 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    margin-right: 10px; /* 下拉框和按钮之间的间距 */
+}
+
+.select-control:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #80bdff;
+    outline: none;
+}
+
