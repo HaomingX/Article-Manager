@@ -133,8 +133,12 @@
             <textarea class="form-control" id="publishTime{{ forloop.counter }}" rows="1" readonly>{{ article.publish_time }}</textarea>
         </div>
         <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>
-        <button class="btn btn-secondary">LLM_explain</button>
+        <button class="btn btn-info llm-explain-btn" data-article-id="{{ article.id }}">LLM Explain</button>
+{#        <div id="llm-summary-{{ article.id }}"></div>#}
         <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">
+            <!-- 内容将通过AJAX加载 -->
+        </div>
+        <div class="full-content mt-3" id="llm-summary-{{ article.id }}" style="display: none;">
             <!-- 内容将通过AJAX加载 -->
         </div>
     </div>
@@ -144,6 +148,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="../static/js/myScript.js"></script>
+<script src="../static/js/myScript.js?version=1.0">
+    var csrfToken = '{{ csrf_token }}';
+</script>
 </body>
 </html>

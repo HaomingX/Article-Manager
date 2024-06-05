@@ -1,7 +1,12 @@
 $(document).ready(function(){
     $(".read-btn").click(function(){
+        console.log("read-btn clicked")
         var articleId = $(this).data("article-id");
         var fullContentDiv = $("#fullContent" + articleId);
+        var llmSummaryDiv = $('#llm-summary-' + articleId);
+
+        // Hide all other full content and summaries
+        $('.full-content').not(fullContentDiv).hide();
 
         if (fullContentDiv.is(":visible")) {
             fullContentDiv.slideUp();
@@ -22,9 +27,46 @@ $(document).ready(function(){
                 }
             });
         }
+
+        llmSummaryDiv.hide();
+    });
+
+    $('.llm-explain-btn').click(function(){
+        var articleId = $(this).data('article-id');
+        var summaryDiv = $('#llm-summary-' + articleId);
+        var fullContentDiv = $('#fullContent' + articleId);
+
+        // Hide all other summaries and full content
+        $('.full-content').not(summaryDiv).hide();
+
+        // Check if the summary is already cached
+        if (summaryDiv.data('cached')) {
+            summaryDiv.toggle();
+            return;
+        }
+
+        $.ajax({
+            url: '/llm_explain/',
+            method: 'POST',
+            data: {
+                'article_id': articleId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                summaryDiv.html(response.summary);
+                summaryDiv.data('cached', true); // Mark as cached
+                summaryDiv.show();
+            },
+            error: function(response) {
+                alert('Error occurred while processing LLM explain.');
+            }
+        });
+        fullContentDiv.hide();
     });
 });
 
 function confirmDelete() {
     return confirm('Are you sure you want to delete this article?');
 }
+
+

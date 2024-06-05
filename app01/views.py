@@ -10,6 +10,11 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 
+import json
+from django.views.decorators.csrf import csrf_exempt
+from .llm_test import llm_explain
+from django.core.cache import cache
+
 
 def register(request):
     if request.method == 'POST':
@@ -47,15 +52,6 @@ def submit_article(request):
         form = ArticleForm()
     return render(request, 'publish.html', {'form': form})
 
-
-# Read button
-def article_content(request, article_id):
-    try:
-        article = Article.objects.get(id=article_id)
-        content = article.content.replace('\n', '<br>')  # 替换换行符为<br>
-        return JsonResponse({'content': content})
-    except Article.DoesNotExist:
-        return JsonResponse({'error': 'Article not found'}, status=404)
 
 @login_required
 def personal(request):
@@ -116,3 +112,33 @@ def delete_article(request, article_id):
     article.delete()
     messages.success(request, "The article has been deleted.")
     return redirect('personal')
+
+
+
+@csrf_exempt
+def llm_explain_view(request):
+    if request.method == 'POST':
+        article_id = request.POST.get('article_id')
+        article = Article.objects.get(id=article_id)
+
+        # Check if the summary is already cached
+        cache_key = f'llm_summary_{article_id}'
+        cached_summary = cache.get(cache_key)
+
+        if cached_summary:
+            summary = cached_summary
+        else:
+            summary = llm_explain(article.content)
+            cache.set(cache_key, summary, timeout=60 * 60)  # Cache for 1 hour
+
+        return JsonResponse({'summary': summary})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+# Read button
+def article_content(request, article_id):
+    try:
+        article = Article.objects.get(id=article_id)
+        content = article.content.replace('\n', '<br>')  # 替换换行符为<br>
+        return JsonResponse({'content': content})
+    except Article.DoesNotExist:
+        return JsonResponse({'error': 'Article not found'}, status=404)
