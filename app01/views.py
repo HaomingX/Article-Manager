@@ -38,6 +38,7 @@ def publish(request):
         subcategories = Category.objects.filter(parent_id=parent_id)
         data = [{'id': subcategory.id, 'name': subcategory.name} for subcategory in subcategories]
         return JsonResponse(data, safe=False)
+    # article = get_object_or_404(Article, id=article_id)
 
     if request.method == 'POST':
         if 'name' in request.POST and 'level' in request.POST:
@@ -113,30 +114,70 @@ def personal(request):
     return render(request, 'personal.html', context)
 
 
-
 @login_required
 def edit_article(request, article_id):
+    if request.method == 'GET' and 'parentId' in request.GET:
+        parent_id = request.GET['parentId']
+        if parent_id !='':
+            subcategories = Category.objects.filter(parent_id=parent_id)
+            data = [{'id': subcategory.id, 'name': subcategory.name} for subcategory in subcategories]
+        return JsonResponse(data, safe=False)
     article = get_object_or_404(Article, id=article_id)
     user = str(request.user)
     # print("article.author", article.author, type(article.author))
     # print("user", user, type(user))
+    if request.method == 'POST':
+        if 'name' in request.POST and 'level' in request.POST:
+            name = request.POST['name']
+            level = int(request.POST['level'])
+            parent_id = request.POST.get('parent')
+            if(parent_id=='null'):
+                new_category = Category.objects.create(name=name, level=level, parent=None)
+            else:
+                parent = Category.objects.get(id=parent_id)
+                new_category = Category.objects.create(name=name, level=level, parent=parent)
+            return JsonResponse({'id': new_category.id, 'name': new_category.name})
+        else:
+            article = get_object_or_404(Article, id=article_id)
+            if request.method == 'POST':
+                # 获取 POST 数据
+                post_data = request.POST.copy()  # 复制 POST 数据
+                # 修改 POST 数据中的值
+                name = request.POST.get('category')
+                # messages.success(request, 'Your article has been edit!')
+                subcategories = Category.objects.get(name=name)
+                post_data['category'] = subcategories.id  # 将 'field_name' 字段的值修改为 'new_value'
+                # 创建表单实例并传入修改后的 POST 数据
+                # print(post_data)
+                form = ArticleForm(post_data, instance=article)
+                # print(form)
+                if form.is_valid():
+                    form.save()
+                    print('success')
+                    return redirect('personal')
+                else:
+                    print('form.is_not_valid')
+            else:
+                form = ArticleForm()
+    article_form = ArticleForm(request.POST, initial={"author": request.user})
+    if article_form.is_valid():
+        print('author edit article!')
+        article_form.save()
+        messages.success(request, 'Your article has been published!')
+        return redirect('personal')
+    else:
+        print('article_form.is_valid')
+
+    categories = Category.objects.all()
     if user != article.author:
         print("You are not authorized to edit this article.")
         messages.error(request, "You are not authorized to edit this article.")
         return redirect('personal')
-    print("author edit article!")
-    if request.method == 'POST':
-        form = ArticleForm(request.POST, instance=article)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'The article has been updated.')
-            return redirect('personal')
-    else:
-        form = ArticleForm(instance=article)
     context = {
-        'form': form,
         'article': article,
+        'categories': categories,
     }
+    print(article)
     return render(request, 'edit_article.html', context)
 
 
