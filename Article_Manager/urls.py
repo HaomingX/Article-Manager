@@ -28,6 +28,7 @@ urlpatterns = [
     path('edit_article/<int:article_id>/', views.edit_article, name='edit_article'),
     path('delete_article/<int:article_id>/', views.delete_article, name='delete_article'),
     path('personal/', views.personal, name='personal'),
+    path('llm_explain/', views.llm_explain_view, name='llm_explain'),
     path('', views.home, name='home'),
 ]
 
