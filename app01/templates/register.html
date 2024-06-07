@@ -5,46 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    <link rel="stylesheet" href="/static/css/login.css?version=1.0.0">
 
-        .container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 1000px;
-            width: 100%;
-        }
-
-        .btn {
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #007bff;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            border-color: #80bdff;
-        }
-    </style>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Register</h1>
-        <form method="post">
+        <form method="post"  autocomplete="off" id="registerForm">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required maxlength="150"
+                       pattern="[A-Za-z0-9@./+/-/_]+" autocomplete="off"
+                {% if form.username.value != null%}value = {{ form.username.value }}{% endif %}>
+                <div id="usernameError" class="error1"></div>
+                {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required autocomplete="off"
+                {% if form.email.value != null %}value = {{ form.email.value }}{% endif %}>
+                <div id="emailError" class="error1"></div>
+                {% if form.email.errors %}
+                    <div class="error">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input type="password" class="form-control" id="password1" name="password1"
+                       required minlength="8" autocomplete="new-password"
+                {% if form.password1.value != null %}value = {{ form.password1.value }}{% endif %}>
+                <div id="password1Error" class="error1"></div>
+                {% if form.password1.errors %}
+                    <div class="error">{{ form.password1.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="password2">Password confirmation</label>
+                <input type="password" class="form-control" id="password2" name="password2" required autocomplete="new-password"
+                {% if form.password2.value != null %}value = {{ form.password2.value }}{% endif %}>
+                <div id="password2Error" class="error1"></div>
+                {% if form.password2.errors %}
+                    <div class="error">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+{#            {{ form.as_p }}#}
             <button type="submit" class="btn btn-primary btn-block">Register</button>
         </form>
     </div>
@@ -52,5 +59,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/static/js/register.js?version=1.0"></script>
 </body>
 </html>
