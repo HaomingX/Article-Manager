@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    $('#toggleAdvancedSearch').click(function(){
+        $('.advanced-search').toggle('active');
+    });
     $(".read-btn").click(function(){
         console.log("read-btn clicked")
         var articleId = $(this).data("article-id");

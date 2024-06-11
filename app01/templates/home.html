@@ -50,7 +50,12 @@
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
             border-color: #80bdff;
         }
+        .advanced-search {
+            display: none;
+            margin-top: 10px;
+        }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -96,17 +101,38 @@
         <p id="dateTotal">Date: {{ current_date }} | Total: {{ total_articles }}</p>
     </div>
 
-    <!-- Search Section -->
-    <div class="my-4">
-        <h3>Search Articles</h3>
-        <form class="form-inline">
-            <div class="form-group mb-2 mr-2">
-                <label for="searchKeyword" class="sr-only">Keyword</label>
-                <input type="text" class="form-control" id="searchKeyword" placeholder="Keyword">
+    <!-- 搜索和高级搜索框 -->
+    <form id="searchForm" method="GET" action="{% url 'search' %}">
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <input type="text" class="form-control" name="q" placeholder="Search full text">
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Search</button>
-        </form>
-    </div>
+            <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <div class="form-group col-md-2">
+                <button class="btn btn-info" id="toggleAdvancedSearch" type="button">Advanced Search</button>
+            </div>
+        </div>
+
+        <div class="form-row advanced-search">
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" name="keyword" placeholder="Keyword">
+            </div>
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" name="title" placeholder="Title">
+            </div>
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" name="category" placeholder="Category">
+            </div>
+            <div class="form-group col-md-3">
+                <input type="date" class="form-control" name="date" placeholder="Date">
+            </div>
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
 
     <!-- Articles Display -->
     {% for article in articles %}

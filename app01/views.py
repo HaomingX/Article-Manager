@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
+
 from .forms import ArticleForm,UserRegisterForm, UserUpdateForm,CategoryForm
 from .models import Article
 import datetime
@@ -15,6 +17,8 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .llm_test import llm_explain
 from django.core.cache import cache
+from django.db.models import Q
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -221,3 +225,38 @@ def delete_article(request, article_id):
     article.delete()
     messages.success(request, "The article has been deleted.")
     return redirect('personal')
+
+
+def search(request):
+    query = request.GET.get('q', '')
+    keyword = request.GET.get('keyword', '')
+    title = request.GET.get('title', '')
+    category = request.GET.get('category', '')
+    date = request.GET.get('date', '')
+
+    q_objects = Q()
+
+    if query:
+        q_objects |= Q(content__icontains=query) | Q(title__icontains=query) | Q(category__name__icontains=query) \
+                     | Q(author__icontains=query) | Q(keywords__icontains=query)
+
+    if keyword:
+        q_objects &= Q(content__icontains=keyword)
+
+    if title:
+        q_objects &= Q(title__icontains=title)
+
+    if category:
+        q_objects &= Q(category__name__icontains=category)
+
+    if date:
+        q_objects &= Q(publish_time__date=date)
+
+    articles = Article.objects.filter(q_objects)
+
+    context = {
+        'articles': articles,
+        'date': timezone.now().date(),
+        'total_articles': Article.objects.count(),
+    }
+    return render(request, 'home.html', context)
