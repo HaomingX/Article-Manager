@@ -64,7 +64,8 @@
                 <li class="list-group-item">
                     <h5>{{ article.title }}</h5>
                     <p>{{ article.content|truncatewords:30 }}</p>
-                    <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>
+<!--                    <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>-->
+                    <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Read More</a>
                     <a href="{% url 'edit_article' article.id %}" class="btn btn-info">Edit</a>
                     <form method="post" action="{% url 'delete_article' article.id %}" onsubmit="return confirmDelete();"style="display:inline;" >
                         {% csrf_token %}

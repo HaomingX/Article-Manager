@@ -161,11 +161,12 @@
             <label for="category{{ forloop.counter }}">Category</label>
             <textarea class="form-control" id="category{{ forloop.counter }}" rows="1" readonly>{{ article.category.name }}</textarea>
         </div>
-        <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>
+<!--        <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>-->
+        <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Read More</a>
         <button class="btn btn-info llm-explain-btn" data-article-id="{{ article.id }}">LLM Explain</button>
-        <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">
-            <!-- 内容将通过AJAX加载 -->
-        </div>
+<!--        <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">-->
+<!--            &lt;!&ndash; 内容将通过AJAX加载 &ndash;&gt;-->
+<!--        </div>-->
         <div class="full-content mt-3" id="llm-summary-{{ article.id }}" style="display: none;">
             <!-- 内容将通过AJAX加载 -->
         </div>

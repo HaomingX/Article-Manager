@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #80bdff;
+        }
+
+        .article-content {
+            white-space: pre-line; /* 保留换行 */
+        }
+
+        .comment {
+            margin-bottom: 20px;
+        }
+
+        .comment-reply {
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Article Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'personal' %}">Personal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'publish' %}">Publish</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="text-center my-4">
+            <h1>{{ article.title }}</h1>
+            <p class="text-muted">Date: {{ article.publish_time }} | Author: {{ article.author }}</p>
+        </div>
+
+        <div class="article-content mb-5">
+            {{ article.content|linebreaks }}
+        </div>
+
+        <div class="comments-section">
+            <h3>Comments</h3>
+            <div class="list-group">
+                {% for comment in comments %}
+                    <div class="list-group-item comment">
+                        <strong>{{ comment.author.username }}</strong> | <small class="text-muted">{{ comment.publish_time }}</small>
+                        <p class="mt-2">{{ comment.content }}</p>
+                        <button class="btn btn-sm btn-link reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
+
+                        {% for reply in comment.replies.all %}
+                            <div class="list-group-item comment-reply bg-light mt-2">
+                                <strong>{{ reply.author.username }}</strong> | <small class="text-muted">{{ reply.publish_time }}</small>
+                                <p class="mt-2">{{ reply.content }}</p>
+                            </div>
+                        {% endfor %}
+
+                        <div class="reply-form mt-2" id="reply-form-{{ comment.id }}" style="display: none;">
+                            <form method="POST" action="{% url 'article_detail' article.id %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ comment_form.content }}
+                                </div>
+                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                <button type="submit" class="btn btn-primary btn-sm">Submit Reply</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <h4 class="mt-4">Add a comment</h4>
+            <form method="POST" action="{% url 'article_detail' article.id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ comment_form.content }}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.reply-btn').click(function(){
+                var commentId = $(this).data('comment-id');
+                $('#reply-form-' + commentId).toggle();
+            });
+        });
+    </script>
+</body>
+</html>

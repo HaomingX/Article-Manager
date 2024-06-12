@@ -25,6 +25,7 @@ urlpatterns = [
     path('publish/', views.publish, name='publish'),
     path('submit_article/', views.submit_article, name='submit_article'),
     path('article_content/<int:article_id>/', views.article_content, name='article_content'),
+    path('article/<int:article_id>/', views.article_detail, name='article_detail'),
     path('edit_article/<int:article_id>/', views.edit_article, name='edit_article'),
     path('delete_article/<int:article_id>/', views.delete_article, name='delete_article'),
     path('personal/', views.personal, name='personal'),
