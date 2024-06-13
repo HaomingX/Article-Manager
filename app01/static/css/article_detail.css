@@ -46,7 +46,8 @@ body {
             font-size: 16px;
         }
         .article-content {
-        border: 1px solid #ccc; /* 边框样式：1像素宽，灰色 */
-        border-radius: 5px; /* 边框圆角 */
-        padding: 15px; /* 内边距 */
+            border: 1px solid #ccc; /* 边框样式：1像素宽，灰色 */
+            border-radius: 5px; /* 边框圆角 */
+            padding: 15px; /* 内边距 */
+            background-color: #dee2e6;
         }

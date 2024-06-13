@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ article.title }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/article_detail.css?version=1.1.1" rel="stylesheet">
+    <link href="/static/css/article_detail.css?version=1.1.2" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -61,7 +61,18 @@
                             <div class="list-group-item comment-reply bg-light mt-2">
                                 <strong>{{ reply.author.username }}</strong> | <small class="text-muted">{{ reply.publish_time }}</small>
                                 <p class="mt-2">{{ reply.content }}</p>
+                                <button class="btn btn-sm btn-link reply-btn" data-comment-id="{{ reply.id }}">Reply</button>
                             </div>
+                             <div class="reply-form mt-2" id="reply-form-{{ reply.id }}" style="display: none;">
+                            <form method="POST" action="{% url 'article_detail' article.id %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ comment_form.content }}
+                                </div>
+                                <input type="hidden" name="parent_id" value="{{ reply.id }}">
+                                <button type="submit" class="btn btn-primary btn-sm">Submit Reply</button>
+                            </form>
+                        </div>
                         {% endfor %}
 
                         <div class="reply-form mt-2" id="reply-form-{{ comment.id }}" style="display: none;">
@@ -98,6 +109,7 @@
         $(document).ready(function(){
             $('.reply-btn').click(function(){
                 var commentId = $(this).data('comment-id');
+                console.log(commentId);
                 $('#reply-form-' + commentId).toggle();
             });
         });
