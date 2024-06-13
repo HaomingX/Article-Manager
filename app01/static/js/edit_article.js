@@ -141,10 +141,12 @@ function modifyCategory(){
 
 }
 function updateCategory(){
-        var categoryId = document.getElementById('id_category');
+        var category = document.getElementById('id_category_display');
+        var categoryID = document.getElementById('id_category');
         var dropdown = document.getElementById('id_category3');
         var selectedOption = dropdown.options[dropdown.selectedIndex];
         var selectedText = selectedOption.text;
         console.log(selectedText);
-        categoryId.value=selectedText;
+        category.value=selectedText;
+        categoryID.value=dropdown.value;
 }

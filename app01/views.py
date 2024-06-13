@@ -206,15 +206,7 @@ def edit_article(request, article_id):
             if request.method == 'POST':
                 # 获取 POST 数据
                 post_data = request.POST.copy()  # 复制 POST 数据
-                # 修改 POST 数据中的值
-                name = request.POST.get('category')
-                # messages.success(request, 'Your article has been edit!')
-                subcategories = Category.objects.get(name=name)
-                post_data['category'] = subcategories.id  # 将 'field_name' 字段的值修改为 'new_value'
-                # 创建表单实例并传入修改后的 POST 数据
-                # print(post_data)
                 form = ArticleForm(post_data, instance=article)
-                # print(form)
                 if form.is_valid():
                     form.save()
                     print('success')
