@@ -5,9 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Article</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/static/js/edit_article.js?version=1.0.1"></script>
+    <script src="/static/js/edit_article.js?version=1.0.2"></script>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Article Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'personal' %}">Personal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'publish' %}">Publish</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
     <div class="container mt-5">
         <h1 class="text-center">Edit Article</h1>
         <form method="post" >
@@ -35,12 +63,14 @@
             </div>
             <div class="form-group">
                 <label for="id_content">Category</label>
+                <div class="category-container">
                 <input type="text" class="form-control" id="id_category" name="category"  value="{{ article.category}}" readonly>
-                <button type="button" onclick="modifyCategory()">Modify</button>
+                <button type="button" onclick="modifyCategory()" class="btn btn-primary">Modify</button>
+                </div>
             </div>
             <div class="dropdown-container" id ="dropdown-container" style="display: none">
                 <div class="dropdown-group">
-                    <label for="id_category1">Category1</label>
+                    <label class="category-label" for="id_category1">Category1</label>
                     <select name="category1" id="id_category1" class="select-control"  onchange="updateCategory2();updateCategory3()">
                         <option value="" disabled selected>Select Category1</option>
                         {% for category in categories %}
@@ -53,7 +83,7 @@
                 </div>
 
                 <div class="dropdown-group">
-                    <label for="id_category2">Category2</label>
+                    <label class="category-label" for="id_category2">Category2</label>
                     <select name="category2" id="id_category2" class="select-control"   onclick="updateCategory3()" onchange="updateCategory3()">
                         <option value="" disabled selected>Select Category2</option>
                         <!-- 此处选项将由 JavaScript 动态填充 -->
@@ -61,7 +91,7 @@
                     <button type="button" onclick="addCategory(2)">Add</button>
                 </div>
                 <div class="dropdown-group">
-                    <label for="id_category3">Category2</label>
+                    <label class="category-label" for="id_category3">Category3</label>
                     <select name="category3" id="id_category3" class="select-control">
                         <option value="" disabled selected>Select Category3</option>
                         <!-- 此处选项将由 JavaScript 动态填充 -->
@@ -69,6 +99,21 @@
                     <button type="button" onclick="addCategory(3)">Add</button>
                 </div>
             </div>
+        <div class="form-group is-shared-container">
+            <label class="is-shared-label" for="id_is_shared">Is Shared:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="is_shared" id="id_is_shared_true" value="True" {% if article.is_shared %}checked{% endif %}>
+                <label class="form-check-label" for="id_is_shared_true">
+                    Yes
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="is_shared" id="id_is_shared_false" value="False" {% if article.is_shared == 0 %}checked{% endif %}>
+                <label class="form-check-label" for="id_is_shared_false">
+                    No
+                </label>
+            </div>
+        </div>
 
             <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
         </form>

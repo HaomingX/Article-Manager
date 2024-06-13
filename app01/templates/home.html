@@ -5,56 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article Manager</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 1000px;
-            width: 100%;
-            margin: 10px;
-        }
-
-        .top-buttons {
-            margin: 10px 0;
-            text-align: center;
-        }
-        .top-buttons button {
-            margin: 0 5px;
-        }
-
-        .article-section {
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #007bff;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            border-color: #80bdff;
-        }
-        .advanced-search {
-            display: none;
-            margin-top: 10px;
-        }
-    </style>
+    <link href="/static/css/home.css?version=1.0.1" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -75,10 +26,10 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'publish' %}">Publish</a>
+                            <a class="nav-link" href="{% url 'personal' %}">Personal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'personal' %}">Personal</a>
+                            <a class="nav-link" href="{% url 'publish' %}">Publish</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -136,6 +87,7 @@
 
     <!-- Articles Display -->
     {% for article in articles %}
+        {% if article.is_shared or article.author == request.user.username %}
     <div class="article-section border p-3">
         <div class="form-group">
             <label for="articleTitle{{ forloop.counter }}">Article Title</label>
@@ -171,6 +123,7 @@
             <!-- 内容将通过AJAX加载 -->
         </div>
     </div>
+        {% endif %}
     {% endfor %}
 </div>
 

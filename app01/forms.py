@@ -22,7 +22,7 @@ class UserUpdateForm(forms.ModelForm):
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'author', 'summary', 'keywords', 'content','category']  # 不包含 publish_time
+        fields = ['title', 'author', 'summary', 'keywords', 'content','category','is_shared']  # 不包含 publish_time
 
     def __init__(self, *args, **kwargs):
         super(ArticleForm, self).__init__(*args, **kwargs)

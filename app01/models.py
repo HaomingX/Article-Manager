@@ -15,6 +15,7 @@ class Article(models.Model):
     publish_time = models.DateTimeField(auto_now_add=True)  # 自动设置为添加时的时间
     content = models.TextField()
     category =  models.ForeignKey(Category, on_delete=models.CASCADE)
+    is_shared = models.BooleanField(default=False)  # 新增字段，默认值为 False（非共享状态）
     def __str__(self):
         return self.title
 

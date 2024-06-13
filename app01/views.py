@@ -39,17 +39,21 @@ def home(request):
     articles = Article.objects.all()
     current_date = datetime.date.today()
     current_date = current_date.strftime('%Y-%m-%d')
+    total_articles = 0
+    for article in articles:
+        if article.is_shared or article.author == request.user.username:
+            total_articles += 1
 
-    total_articles = articles.count()
     return render(request, 'home.html', {'articles': articles, 'current_date': current_date, 'total_articles': total_articles})
 
 @login_required
 def publish(request):
     if request.method == 'GET' and 'parentId' in request.GET:
         parent_id = request.GET['parentId']
-        subcategories = Category.objects.filter(parent_id=parent_id)
-        data = [{'id': subcategory.id, 'name': subcategory.name} for subcategory in subcategories]
-        return JsonResponse(data, safe=False)
+        if parent_id:
+            subcategories = Category.objects.filter(parent_id=parent_id)
+            data = [{'id': subcategory.id, 'name': subcategory.name} for subcategory in subcategories]
+            return JsonResponse(data, safe=False)
     # article = get_object_or_404(Article, id=article_id)
 
     if request.method == 'POST':
@@ -222,8 +226,6 @@ def edit_article(request, article_id):
         article_form.save()
         messages.success(request, 'Your article has been published!')
         return redirect('personal')
-    else:
-        print('article_form.is_valid')
 
     categories = Category.objects.all()
     if user != article.author:
@@ -234,7 +236,7 @@ def edit_article(request, article_id):
         'article': article,
         'categories': categories,
     }
-    print(article)
+    #print(article)
     return render(request, 'edit_article.html', context)
 
 
@@ -259,6 +261,8 @@ def search(request):
     title = request.GET.get('title', '')
     category = request.GET.get('category', '')
     date = request.GET.get('date', '')
+    current_date = datetime.date.today()
+    current_date = current_date.strftime('%Y-%m-%d')
 
     q_objects = Q()
 
@@ -279,10 +283,15 @@ def search(request):
         q_objects &= Q(publish_time__date=date)
 
     articles = Article.objects.filter(q_objects)
+    total_articles = 0
+    for article in articles:
+        if article.is_shared or article.author == request.user.username:
+            total_articles += 1
 
     context = {
         'articles': articles,
-        'date': timezone.now().date(),
-        'total_articles': Article.objects.count(),
+        'current_date': current_date,
+        'total_articles': total_articles,
     }
+    print(context)
     return render(request, 'home.html', context)

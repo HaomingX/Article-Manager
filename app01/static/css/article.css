@@ -1,7 +1,7 @@
-body{
+body {
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     min-height: 100vh;
-    display: flex;
+    /*display: flex;*/
     justify-content: center;
     align-items: center;
 }
@@ -37,30 +37,35 @@ h1 {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     border-color: #80bdff;
 }
+
 .dropdown-container {
     display: flex;
-    /*flex-direction: column; !* 使下拉框组垂直排列 *!*/
-    gap: 50px; /* 添加下拉框组之间的间距 */
+    gap: 50px;
+    align-items: center; /* Ensure vertical alignment of children */
+    padding: 10px;
     margin-bottom: 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
 }
 
 .dropdown-group {
     display: flex;
-    align-items: center; /* 垂直居中对齐下拉框和按钮 */
+    align-items: center;
 }
 
 .dropdown-group label {
-    margin-right: 10px; /* 标签和下拉框之间的间距 */
+    margin-right: 10px;
 }
 
 .select-control {
-    width: 200px; /* 设置下拉框宽度 */
+    width: 200px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     transition: box-shadow 0.3s, border-color 0.3s;
-    margin-right: 10px; /* 下拉框和按钮之间的间距 */
+    margin-right: 10px;
 }
 
 .select-control:focus {
@@ -68,4 +73,46 @@ h1 {
     border-color: #80bdff;
     outline: none;
 }
+.category-label{
+    font-weight: bold;
+    margin: 0;
+    color: #007bff;
+}
+.category-container{
+    display: flex;
+    gap: 10px;
+}
 
+.is-shared-container {
+    display: flex;
+    align-items: center; /* Ensure vertical alignment of children */
+    gap: 10px;
+    /*margin-top: 20px;*/
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.is-shared-label {
+    font-weight: bold;
+    margin: 0;
+    color: #007bff;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.form-check-input {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.form-check-label {
+    margin: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
