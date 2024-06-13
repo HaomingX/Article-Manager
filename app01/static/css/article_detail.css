@@ -37,3 +37,16 @@ body {
         .comment-reply {
             margin-left: 30px;
         }
+        .custom-comment-box {
+            border: 2px solid #007bff;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .article-content {
+        border: 1px solid #ccc; /* 边框样式：1像素宽，灰色 */
+        border-radius: 5px; /* 边框圆角 */
+        padding: 15px; /* 内边距 */
+        }
