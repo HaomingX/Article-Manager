@@ -6,6 +6,7 @@
     <title>Personal</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/home.css?version=1.0.0" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
@@ -23,10 +24,10 @@
                     <ul class="navbar-nav ml-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'publish' %}">Publish</a>
+                                <a class="nav-link" href="{% url 'personal' %}">Personal</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'personal' %}">Personal</a>
+                                <a class="nav-link" href="{% url 'publish' %}">Publish</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -62,15 +63,30 @@
         <ul class="list-group">
             {% for article in user_articles %}
                 <li class="list-group-item">
-                    <h5>{{ article.title }}</h5>
-                    <p>{{ article.content|truncatewords:30 }}</p>
-<!--                    <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>-->
-                    <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Read More</a>
-                    <a href="{% url 'edit_article' article.id %}" class="btn btn-info">Edit</a>
-                    <form method="post" action="{% url 'delete_article' article.id %}" onsubmit="return confirmDelete();"style="display:inline;" >
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger" >Delete</button>
-                    </form>
+                    <div class="article-card">
+                        <div class="article-title">
+                            <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                        </div>
+                        <div class="article-summary">
+                            {{ article.summary }}
+                        </div>
+                        <div class="keywords">
+                            <p class="article-publish mt-2">keywords:</p>
+                            <p class="article-keywords mt-2">{{ article.keywords }}</p>
+                        </div>
+                        <div class="article-publish mt-2">
+                            Publish: {{ article.publish_time }}
+                        </div>
+                        <div class="btn-action">
+                            <button class="btn btn-info llm-explain-btn" data-article-id="{{ article.id }}">LLM Explain</button>
+                            <a href="{% url 'edit_article' article.id %}" class="btn btn-success">Edit</a>
+                            <form method="post" action="{% url 'delete_article' article.id %}" onsubmit="return confirmDelete();"style="display:inline;" >
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" >Delete</button>
+                            </form>
+                        </div>
+                        <div class="full-content mt-3" id="llm-summary-{{ article.id }}" style="display: none;"></div>
+                    </div>
                     <div class="article-content" id="article-content-{{ article.id }}" style="display: none;"></div>
                     <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">
                         <!-- 内容将通过AJAX加载 -->

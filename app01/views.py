@@ -154,6 +154,7 @@ def llm_explain_view(request):
 @login_required
 def personal(request):
     user_articles = Article.objects.filter(author=request.user)
+    #print(user_articles)
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         if user_form.is_valid():
