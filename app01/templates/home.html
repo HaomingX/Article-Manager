@@ -85,51 +85,42 @@
         </div>
     </form>
 
+
     <!-- Articles Display -->
-    {% for article in articles %}
-        {% if article.is_shared or article.author == request.user.username %}
-    <div class="article-section border p-3">
-        <div class="form-group">
-            <label for="articleTitle{{ forloop.counter }}">Article Title</label>
-            <textarea class="form-control" id="articleTitle{{ forloop.counter }}" rows="1" readonly>{{ article.title }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="author{{ forloop.counter }}">Author</label>
-            <textarea class="form-control" id="author{{ forloop.counter }}" rows="1" readonly>{{ article.author }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="summary{{ forloop.counter }}">Summary of the article/Few words before the article</label>
-            <textarea class="form-control" id="summary{{ forloop.counter }}" rows="3" readonly>{{ article.summary }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="keywords{{ forloop.counter }}">Key words</label>
-            <textarea class="form-control" id="keywords{{ forloop.counter }}" rows="1" readonly>{{ article.keywords }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="publishTime{{ forloop.counter }}">Publish time</label>
-            <textarea class="form-control" id="publishTime{{ forloop.counter }}" rows="1" readonly>{{ article.publish_time }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="category{{ forloop.counter }}">Category</label>
-            <textarea class="form-control" id="category{{ forloop.counter }}" rows="1" readonly>{{ article.category.name }}</textarea>
-        </div>
-<!--        <button class="btn btn-primary read-btn" data-article-id="{{ article.id }}">Read More</button>-->
-        <a href="{% url 'article_detail' article.id %}" class="btn btn-primary">Read More</a>
-        <button class="btn btn-info llm-explain-btn" data-article-id="{{ article.id }}">LLM Explain</button>
-<!--        <div class="full-content mt-3" id="fullContent{{ article.id }}" style="display: none;">-->
-<!--            &lt;!&ndash; 内容将通过AJAX加载 &ndash;&gt;-->
-<!--        </div>-->
-        <div class="full-content mt-3" id="llm-summary-{{ article.id }}" style="display: none;">
-            <!-- 内容将通过AJAX加载 -->
-        </div>
+    <div class="articles">
+        {% for article in articles %}
+            {% if article.is_shared or article.author == request.user.username %}
+            <div class="article-card">
+                <div class="article-title">
+                    <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                </div>
+                <div class="article-authors">
+                    Authors: {{ article.author }}
+                </div>
+                <div class="article-summary">
+                    {{ article.summary }}
+                </div>
+                <div class="keywords">
+                    <p class="article-publish mt-2">keywords:</p>
+                    <p class="article-keywords mt-2">{{ article.keywords }}</p>
+                </div>
+                <div class="article-publish mt-2">
+                    Publish: {{ article.publish_time }}
+                </div>
+                <div class="btn-action">
+                    <button class="btn btn-info llm-explain-btn" data-article-id="{{ article.id }}">LLM Explain</button>
+                </div>
+                <div class="full-content mt-3" id="llm-summary-{{ article.id }}" style="display: none;"></div>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
-        {% endif %}
-    {% endfor %}
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="../static/js/myScript.js?version=1.0.0"></script>
 </body>
 </html>
