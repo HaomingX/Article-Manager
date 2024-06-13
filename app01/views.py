@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
-
+from django.template.context_processors import csrf
 from .forms import ArticleForm,UserRegisterForm, UserUpdateForm,CategoryForm, CommentForm
 from .models import Article, Comment
 import datetime
@@ -124,12 +124,14 @@ def article_detail(request, article_id):
             return redirect('article_detail', article_id=article.id)
     else:
         comment_form = CommentForm()
-
-    return render(request, 'article_detail.html', {
+    context = {
         'article': article,
         'comments': comments,
-        'comment_form': comment_form
-    })
+        'comment_form': comment_form,
+    }
+    context.update(csrf(request))
+
+    return render(request, 'article_detail.html',context)
 
 
 @csrf_exempt

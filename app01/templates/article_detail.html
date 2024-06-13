@@ -1,3 +1,4 @@
+{% load custom_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ article.title }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/article_detail.css?version=1.1.2" rel="stylesheet">
+    <link href="/static/css/article_detail.css?version=1.1.7" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,45 +51,9 @@
 
         <div class="comments-section">
             <h3>Comments</h3>
-            <div class="list-group">
-                {% for comment in comments %}
-                    <div class="list-group-item comment">
-                        <strong>{{ comment.author.username }}</strong> | <small class="text-muted">{{ comment.publish_time }}</small>
-                        <p class="mt-2">{{ comment.content }}</p>
-                        <button class="btn btn-sm btn-link reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
-
-                        {% for reply in comment.replies.all %}
-                            <div class="list-group-item comment-reply bg-light mt-2">
-                                <strong>{{ reply.author.username }}</strong> | <small class="text-muted">{{ reply.publish_time }}</small>
-                                <p class="mt-2">{{ reply.content }}</p>
-                                <button class="btn btn-sm btn-link reply-btn" data-comment-id="{{ reply.id }}">Reply</button>
-                            </div>
-                             <div class="reply-form mt-2" id="reply-form-{{ reply.id }}" style="display: none;">
-                            <form method="POST" action="{% url 'article_detail' article.id %}">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    {{ comment_form.content }}
-                                </div>
-                                <input type="hidden" name="parent_id" value="{{ reply.id }}">
-                                <button type="submit" class="btn btn-primary btn-sm">Submit Reply</button>
-                            </form>
-                        </div>
-                        {% endfor %}
-
-                        <div class="reply-form mt-2" id="reply-form-{{ comment.id }}" style="display: none;">
-                            <form method="POST" action="{% url 'article_detail' article.id %}">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    {{ comment_form.content }}
-                                </div>
-                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                                <button type="submit" class="btn btn-primary btn-sm">Submit Reply</button>
-                            </form>
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="comments">
+                {% render_comments article %}
             </div>
-
             <h4 class="mt-4">Add a comment</h4>
             <form method="POST" action="{% url 'article_detail' article.id %}">
                 {% csrf_token %}
@@ -106,13 +71,44 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $('.reply-btn').click(function(){
-                var commentId = $(this).data('comment-id');
-                console.log(commentId);
-                $('#reply-form-' + commentId).toggle();
+        // js/scripts.js
+            document.addEventListener('DOMContentLoaded', function() {
+                var replyButtons = document.querySelectorAll('.reply-btn');
+                replyButtons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var commentId = this.getAttribute('data-comment-id');
+                        var replyForm = document.getElementById('reply-form-' + commentId);
+                        if (replyForm.style.display === 'none') {
+                            replyForm.style.display = 'block';
+                        } else {
+                            replyForm.style.display = 'none';
+                        }
+                    });
+                });
             });
-        });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var comments = document.querySelectorAll('.comment, .comment-reply');
+                comments.forEach(function(comment) {
+                    var level = parseInt(comment.getAttribute('data-level'));
+                    console.log(level);
+                    comment.style.marginLeft = (level * 20) + 'px'; // 设置缩进，每级增加20px
+                    comment.style.backgroundColor = 'hsl(' + (200 + (level * 10)) + ', 20%, 90%)'; // 设置背景色
+                });
+            });
+
+
+            $(document).ready(function() {
+                $('.comment-content-reply').hover(
+                    function() {
+                        $(this).find('.reply-btn').fadeIn(); // Show reply button on hover
+                    },
+                    function() {
+                        $(this).find('.reply-btn').fadeOut(); // Hide reply button on mouse leave
+                    }
+                );
+            });
+
     </script>
 </body>
 </html>

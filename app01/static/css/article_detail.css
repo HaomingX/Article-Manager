@@ -51,3 +51,22 @@ body {
             padding: 15px; /* 内边距 */
             background-color: #dee2e6;
         }
+        .list-group-item {
+            padding: 10px; /* Adjust padding to reduce overall height */
+            margin-bottom: 10px; /* Reduce bottom margin for compact layout */
+        }
+        .reply-btn {
+            height: 40px;
+            font-size: 16px; /* Adjust font size */
+            padding: 5px 10px; /* Adjust padding for smaller size */
+            margin-top: 5px; /* Add margin-top for spacing */
+            transition: background-color 0.3s; /* Only transition background color */
+            color: #007bff;
+            align-self: center; /* Center vertically within flex container */
+        }
+        .comment-content-reply {
+            display: flex;
+            justify-content: space-between; /* Align items with space between */
+            align-items: center; /* Vertically center items */
+        }
+

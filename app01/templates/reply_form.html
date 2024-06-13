@@ -1,0 +1,11 @@
+<!-- templates/reply_form.html -->
+<div class="reply-form mt-2" id="reply-form-{{ comment.id }}" style="display: none;">
+    <form method="POST" action="{% url 'article_detail' article.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ comment_form.content }}
+        </div>
+        <input type="hidden" name="parent_id" value="{{ comment.id }}">
+        <button type="submit" class="btn btn-primary btn-sm">Submit Reply</button>
+    </form>
+</div>
