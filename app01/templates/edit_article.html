@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,8 @@
     <title>Edit Article</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="/static/js/edit_article.js?version=1.0.3"></script>
+     <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -102,21 +105,21 @@
                     <button type="button" onclick="addCategory(3)">Add</button>
                 </div>
             </div>
-        <div class="form-group is-shared-container">
-            <label class="is-shared-label" for="id_is_shared">Is Shared:</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="is_shared" id="id_is_shared_true" value="True" {% if article.is_shared %}checked{% endif %}>
-                <label class="form-check-label" for="id_is_shared_true">
-                    Yes
-                </label>
+            <div class="form-group is-shared-container">
+                <label class="is-shared-label" for="id_is_shared">Is Shared:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="is_shared" id="id_is_shared_true" value="True" {% if article.is_shared %}checked{% endif %}>
+                    <label class="form-check-label" for="id_is_shared_true">
+                        Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="is_shared" id="id_is_shared_false" value="False" {% if article.is_shared == 0 %}checked{% endif %}>
+                    <label class="form-check-label" for="id_is_shared_false">
+                        No
+                    </label>
+                </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="is_shared" id="id_is_shared_false" value="False" {% if article.is_shared == 0 %}checked{% endif %}>
-                <label class="form-check-label" for="id_is_shared_false">
-                    No
-                </label>
-            </div>
-        </div>
 
             <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
         </form>
@@ -129,4 +132,7 @@
     <link rel="stylesheet" href="/static/css/article.css?version=1.0.1">
 {% endblock %}
 </body>
+<script>
+    CKEDITOR.replace('id_content');
+</script>
 </html>

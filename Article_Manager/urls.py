@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from app01 import views
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('register/', views.register, name='register'),
@@ -32,5 +34,9 @@ urlpatterns = [
     path('llm_explain/', views.llm_explain_view, name='llm_explain'),
     path('search/', views.search, name='search'),
     path('', views.home, name='home'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

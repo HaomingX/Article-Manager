@@ -69,4 +69,16 @@ body {
             justify-content: space-between; /* Align items with space between */
             align-items: center; /* Vertically center items */
         }
+        .article-content {
+            line-height: 1.1;!important;
+            /* 调整行高 */
+        }
+        .article-content > * {
+            margin-top: 0px; /* 设置顶部间距 */
+            margin-bottom: 0px; /* 设置底部间距 */
+            padding-top: 0px; /* 设置顶部内边距 */
+            padding-bottom: 0px; /* 设置底部内边距 */
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
 

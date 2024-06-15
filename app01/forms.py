@@ -3,6 +3,7 @@ from .models import Article
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Category, Comment
+from ckeditor.widgets import CKEditorWidget
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     class Meta:
@@ -20,6 +21,7 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ArticleForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget(config_name='default', attrs={'class': 'custom-content-class'}))
     class Meta:
         model = Article
         fields = ['title', 'author', 'summary', 'keywords', 'content','category','is_shared']  # 不包含 publish_time

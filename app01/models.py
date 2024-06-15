@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from ckeditor_uploader.fields import RichTextUploadingField
 class Category(models.Model):
     name = models.CharField(max_length=100)
     level = models.IntegerField()
@@ -13,7 +13,7 @@ class Article(models.Model):
     summary = models.TextField()
     keywords = models.CharField(max_length=200)
     publish_time = models.DateTimeField(auto_now_add=True)  # 自动设置为添加时的时间
-    content = models.TextField()
+    content = RichTextUploadingField()  # 使用带上传功能的 CKEditor
     category =  models.ForeignKey(Category, on_delete=models.CASCADE)
     is_shared = models.BooleanField(default=False)  # 新增字段，默认值为 False（非共享状态）
     def __str__(self):

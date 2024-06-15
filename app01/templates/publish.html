@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publish Article</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/article.css?version=1.0.2">
+    <link rel="stylesheet" href="/static/css/article.css?version=1.0.8">
     <script src="/static/js/category.js?version=1.0.1"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+</head>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -60,6 +64,7 @@
             </div>
             <div class="form-group">
                 <label for="id_content">Content</label>
+{#                {{ article_form.content }}#}
                 <textarea class="form-control" id="id_content" name="content" rows="10" required></textarea>
             </div>
             <div class="dropdown-container">
@@ -93,7 +98,7 @@
                     <button type="button" onclick="addCategory(3)">Add</button>
                 </div>
             </div>
-        <div class="form-group is-shared-container">
+            <div class="form-group is-shared-container">
             <label class="is-shared-label" for="id_is_shared">Is Shared:</label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="is_shared" id="id_is_shared_true" value="True">
@@ -115,4 +120,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<script>
+    CKEDITOR.replace('id_content');
+</script>
 </html>
