@@ -64,6 +64,19 @@
             </form>
         </div>
 
+        <div class="chat-container mt-5">
+            <h3>Chat With Article</h3>
+            <div id="chat-box" class="chat-box">
+                <!-- Messages will be appended here -->
+            </div>
+            <div class="input-group mt-3">
+                <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
+                <button id="send-button" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+
+
+
         <div class="text-center mt-4">
             <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
         </div>
@@ -108,7 +121,53 @@
                     }
                 );
             });
+            document.addEventListener('DOMContentLoaded', function() {
+                const sendButton = document.getElementById('send-button');
+                const userInput = document.getElementById('user-input');
+                const chatBox = document.getElementById('chat-box');
 
+                sendButton.addEventListener('click', sendMessage);
+                userInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') sendMessage();
+                });
+
+                function sendMessage() {
+                    const message = userInput.value.trim();
+                    if (!message) return;
+
+                    appendMessage('user', message);
+                    userInput.value = '';
+
+                    fetch('{% url "chat_api" %}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ message: message, article_id: {{ article.id }} })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.reply) {
+                            appendMessage('bot', data.reply);
+                        }
+                    });
+                }
+
+                function appendMessage(sender, message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message', sender);
+                    const label = document.createElement('strong');
+                    label.classList.add('label');
+                    label.textContent = sender === 'user' ? 'User: ' : 'LLM: ';
+                    messageElement.appendChild(label);
+                    const text = document.createElement('span');
+                    text.textContent = message;
+                    messageElement.appendChild(text);
+                    chatBox.appendChild(messageElement);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            });
     </script>
 </body>
 </html>

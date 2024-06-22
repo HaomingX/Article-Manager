@@ -16,7 +16,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.views.decorators.csrf import csrf_exempt
-from .llm_test import llm_explain
+from .llm_test import llm_explain, llm_chat
 from django.core.cache import cache
 from django.db.models import Q
 import os
@@ -153,6 +153,23 @@ def llm_explain_view(request):
             cache.set(cache_key, summary, timeout=60 * 60)  # Cache for 1 hour
 
         return JsonResponse({'summary': summary})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@csrf_exempt
+def chat_api(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        message = data.get('message')
+        article_id = data.get('article_id')
+
+        # 根据文章ID获取文章内容
+        article = Article.objects.get(id=article_id)
+        article_content = article.content
+        # 调用大模型函数进行对话
+        response = llm_chat(article_content, message)
+
+        return JsonResponse({'reply': response})
+
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required

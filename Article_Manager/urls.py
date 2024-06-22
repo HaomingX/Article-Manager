@@ -37,6 +37,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls,name='admin'),  # 管理后台路径
+    path('chat-api/', views.chat_api, name='chat_api'),
 
 ]
 
