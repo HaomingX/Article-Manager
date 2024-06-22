@@ -77,6 +77,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "Article_Manager.wsgi.application"
 
 
+DEBUG = False
+ALLOWED_HOSTS = ['127.0.0.1', '<site_name>.herokuapp.com']
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -154,3 +156,16 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+     # Added Following One Line Of Code
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
