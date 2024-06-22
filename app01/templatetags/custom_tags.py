@@ -3,7 +3,7 @@ from django import template
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from app01.models import Comment
-
+from datetime import datetime
 register = template.Library()
 
 @register.simple_tag(takes_context=True)
@@ -28,11 +28,13 @@ def _render_comments(context, comments, level=0):
                 background_color = '#f0f0f0'  # Alternate color 1
             else:
                 background_color = '#f5f5f5'  # Alternate color 2
-
+        # Format the publish_time using strftime
+        formatted_time = comment.publish_time.strftime('%Y-%m-%d %H:%M:%S')
         html += f'<div class="list-group-item comment {level_class}" style="margin-left: {level * 20}px; background-color: {background_color};">'
         html += f'<div class="comment-content-reply" style="display:flex">'
         html += f'<div class="comment-content">'
-        html += f'<strong>{comment.author.username}</strong> | <small class="text-muted">{comment.publish_time}</small>'
+        html += f'<strong>{comment.author.username}</strong> | <small class="text-muted">{formatted_time}</small>'
+        print(comment.publish_time)
         html += f'<p class="mt-2">{comment.content}</p>'
         html += f'</div>'
         html += f'<button class="btn reply-btn" data-comment-id="{comment.id}" style="display: none;" >Reply</button>'

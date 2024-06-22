@@ -134,5 +134,15 @@
 </body>
 <script>
     CKEDITOR.replace('id_content');
+       {% comment %} , {
+        extraPlugins: 'uploadimage,clipboard',
+        filebrowserUploadUrl: '/upload_image/',  // 根据实际情况设置图片上传的处理 URL
+        filebrowserParams: function(){
+        var csrf_token = $('[name="csrfmiddlewaretoken"]').val();
+        return {
+            csrfmiddlewaretoken: csrf_token
+        };
+    },
+    });{% endcomment %}
 </script>
 </html>

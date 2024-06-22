@@ -35,6 +35,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('', views.home, name='home'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('admin/', admin.site.urls,name='admin'),  # 管理后台路径
 ]
 
 if settings.DEBUG:

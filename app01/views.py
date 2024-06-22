@@ -12,13 +12,15 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from .models import Category
-
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 import json
 from django.views.decorators.csrf import csrf_exempt
 from .llm_test import llm_explain
 from django.core.cache import cache
 from django.db.models import Q
-
+import os
+from django.conf import settings
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -290,3 +292,22 @@ def search(request):
     }
     print(context)
     return render(request, 'home.html', context)
+
+# @csrf_exempt
+# @require_POST
+# def upload_image(request):
+#     if request.method == 'POST':
+#         image = request.FILES.get('upload')
+#         if image:
+#             upload_dir = os.path.join(settings.BASE_DIR, 'static', 'images')
+#             if not os.path.exists(upload_dir):
+#                 os.makedirs(upload_dir)  # 创建目录
+#
+#             file_path = os.path.join(upload_dir, image.name)
+#             with open(file_path, 'wb+') as destination:
+#                 for chunk in image.chunks():
+#                     destination.write(chunk)
+#             url = f"/static/images/{image.name}"
+#             return JsonResponse({'uploaded': 1, 'fileName': image.name, 'url': url})
+#         return JsonResponse({'uploaded': 0, 'error': {'message': 'No file uploaded'}})
+#     return JsonResponse({'uploaded': 0, 'error': {'message': 'Invalid request method'}})

@@ -94,7 +94,7 @@ DATABASES = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# CKEditor 上传文件的相关配置
+# # CKEditor 上传文件的相关配置
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # 可选：CKEditor 的配置
