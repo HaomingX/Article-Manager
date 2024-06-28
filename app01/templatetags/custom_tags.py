@@ -34,9 +34,9 @@ def _render_comments(context, comments, level=0):
         html += f'<div class="comment-content-reply" style="display:flex">'
         html += f'<div class="comment-content">'
         html += f'<strong>{comment.author.username}</strong> | <small class="text-muted">{formatted_time}</small>'
-        print(comment.publish_time)
         html += f'<p class="mt-2">{comment.content}</p>'
         html += f'</div>'
+        # if user.is_authenticated:
         html += f'<button class="btn reply-btn" data-comment-id="{comment.id}" style="display: none;" >Reply</button>'
         html += f'</div>'
         if comment.replies.count() > 0:

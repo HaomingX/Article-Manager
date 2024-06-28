@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article Manager</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/home.css?version=1.0.1" rel="stylesheet">
+    <link href="/static/css/home.css?version=1.0.2" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -106,6 +106,10 @@
                 <div class="keywords">
                     <p class="article-publish mt-2">keywords:</p>
                     <p class="article-keywords mt-2">{{ article.keywords }}</p>
+                </div>
+                 <div class="category">
+                    <p class="article-publish mt-2">category:</p>
+                    <p class="article-keywords mt-2">{{ article.category }}</p>
                 </div>
                 <div class="article-publish mt-2">
                     Publish: {{ article.publish_time }}

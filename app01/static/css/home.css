@@ -81,8 +81,22 @@ body {
 
 .keywords{
     display: flex;
-}
+    margin-top: 0px;
+    line-height: 1;
+    font-weight: 400;
+    padding-bottom: 0;
+    padding-top: 0;
+    height: 30px;
 
+}
+.category{
+    display: flex;
+    margin-top: 0px;
+    line-height: 1;
+    padding-bottom: 0;
+    padding-top: 0;
+    height: 30px;
+}
 .article-summary {
     margin-top: 10px;
     color: #333;

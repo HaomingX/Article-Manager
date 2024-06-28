@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ article.title }}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/article_detail.css?version=1.1.2" rel="stylesheet">
+    <link type="text/css" href="/static/css/article_detail.css?version=1.1.4" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,6 +54,7 @@
             <div class="comments">
                 {% render_comments article %}
             </div>
+            {% if user.is_authenticated %}
             <h4 class="mt-4">Add a comment</h4>
             <form method="POST" action="{% url 'article_detail' article.id %}">
                 {% csrf_token %}
@@ -62,6 +63,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            {% endif %}
         </div>
 
         <div class="chat-container mt-5">
@@ -81,93 +83,13 @@
             <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        // js/scripts.js
-            document.addEventListener('DOMContentLoaded', function() {
-                var replyButtons = document.querySelectorAll('.reply-btn');
-                replyButtons.forEach(function(button) {
-                    button.addEventListener('click', function() {
-                        var commentId = this.getAttribute('data-comment-id');
-                        var replyForm = document.getElementById('reply-form-' + commentId);
-                        if (replyForm.style.display === 'none') {
-                            replyForm.style.display = 'block';
-                        } else {
-                            replyForm.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            document.addEventListener('DOMContentLoaded', function() {
-                var comments = document.querySelectorAll('.comment, .comment-reply');
-                comments.forEach(function(comment) {
-                    var level = parseInt(comment.getAttribute('data-level'));
-                    console.log(level);
-                    comment.style.marginLeft = (level * 20) + 'px'; // 设置缩进，每级增加20px
-                    comment.style.backgroundColor = 'hsl(' + (200 + (level * 10)) + ', 20%, 90%)'; // 设置背景色
-                });
-            });
-
-
-            $(document).ready(function() {
-                $('.comment-content-reply').hover(
-                    function() {
-                        $(this).find('.reply-btn').fadeIn(); // Show reply button on hover
-                    },
-                    function() {
-                        $(this).find('.reply-btn').fadeOut(); // Hide reply button on mouse leave
-                    }
-                );
-            });
-            document.addEventListener('DOMContentLoaded', function() {
-                const sendButton = document.getElementById('send-button');
-                const userInput = document.getElementById('user-input');
-                const chatBox = document.getElementById('chat-box');
-
-                sendButton.addEventListener('click', sendMessage);
-                userInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') sendMessage();
-                });
-
-                function sendMessage() {
-                    const message = userInput.value.trim();
-                    if (!message) return;
-
-                    appendMessage('user', message);
-                    userInput.value = '';
-
-                    fetch('{% url "chat_api" %}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({ message: message, article_id: {{ article.id }} })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.reply) {
-                            appendMessage('bot', data.reply);
-                        }
-                    });
-                }
-
-                function appendMessage(sender, message) {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('message', sender);
-                    const label = document.createElement('strong');
-                    label.classList.add('label');
-                    label.textContent = sender === 'user' ? 'User: ' : 'LLM: ';
-                    messageElement.appendChild(label);
-                    const text = document.createElement('span');
-                    text.textContent = message;
-                    messageElement.appendChild(text);
-                    chatBox.appendChild(messageElement);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }
-            });
+        // Assuming userIsAuthenticated is set in your Django template context
+        var userIsAuthenticated = {{ user.is_authenticated|lower }};
+        var articleId = {{ article.id|lower }};
+        var chat_api_url = {% url "chat_api" %};
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="/static/js/article.js?version=1.9"></script>
 </body>
 </html>

@@ -274,24 +274,35 @@ def search(request):
     keyword = request.GET.get('keyword', '')
     title = request.GET.get('title', '')
     category = request.GET.get('category', '')
+    category1 = Category.objects.filter(name=category)
+    queryset = []
+    for category in category1:
+        if category.level !=3:
+            category = Category.objects.filter(parent_id=category.id)
+            queryset.extend(category)
+    for category in queryset:
+        if category.level !=3:
+            category = Category.objects.filter(parent_id=category.id)
+            queryset.extend(category)
     date = request.GET.get('date', '')
     current_date = datetime.date.today()
     current_date = current_date.strftime('%Y-%m-%d')
 
     q_objects = Q()
-
     if query:
         q_objects |= Q(content__icontains=query) | Q(title__icontains=query) | Q(category__name__icontains=query) \
                      | Q(author__icontains=query) | Q(keywords__icontains=query)
 
     if keyword:
-        q_objects &= Q(content__icontains=keyword)
+        q_objects &= Q(keywords__icontains=keyword)
 
     if title:
         q_objects &= Q(title__icontains=title)
-
     if category:
-        q_objects &= Q(category__name__icontains=category)
+        q_objects |= Q(category__name__icontains=category)
+        if queryset:
+            for category in queryset:
+                q_objects |= Q(category__name__icontains=category)
 
     if date:
         q_objects &= Q(publish_time__date=date)
@@ -307,24 +318,4 @@ def search(request):
         'current_date': current_date,
         'total_articles': total_articles,
     }
-    print(context)
     return render(request, 'home.html', context)
-
-# @csrf_exempt
-# @require_POST
-# def upload_image(request):
-#     if request.method == 'POST':
-#         image = request.FILES.get('upload')
-#         if image:
-#             upload_dir = os.path.join(settings.BASE_DIR, 'static', 'images')
-#             if not os.path.exists(upload_dir):
-#                 os.makedirs(upload_dir)  # 创建目录
-#
-#             file_path = os.path.join(upload_dir, image.name)
-#             with open(file_path, 'wb+') as destination:
-#                 for chunk in image.chunks():
-#                     destination.write(chunk)
-#             url = f"/static/images/{image.name}"
-#             return JsonResponse({'uploaded': 1, 'fileName': image.name, 'url': url})
-#         return JsonResponse({'uploaded': 0, 'error': {'message': 'No file uploaded'}})
-#     return JsonResponse({'uploaded': 0, 'error': {'message': 'Invalid request method'}})

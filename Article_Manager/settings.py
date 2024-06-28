@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -93,8 +93,8 @@ DATABASES = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# # CKEditor 上传文件的相关配置
-CKEDITOR_UPLOAD_PATH = "uploads/"
+# DEBUG=False                    #关闭调试模式
+ALLOWED_HOSTS = ['*']   #任何ip都可以访问
 
 # 可选：CKEditor 的配置
 CKEDITOR_CONFIGS = {
@@ -147,8 +147,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
+STATIC_ROOT = "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
