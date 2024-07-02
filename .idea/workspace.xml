@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4eef8874-a8a1-43d2-a480-d99eb7adf484" name="Changes" comment="djx">
-      <change afterPath="$PROJECT_DIR$/app01/static/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app01/static/js/article.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app01/static/js/jquery.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e0bd3179-a419-4aee-bb7f-da833e4d3f96.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Article_Manager/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Article_Manager/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/static/css/article_detail.css" beforeDir="false" afterPath="$PROJECT_DIR$/app01/static/css/article_detail.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/static/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/app01/static/css/home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/templates/article_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/app01/templates/article_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/templates/edit_article.html" beforeDir="false" afterPath="$PROJECT_DIR$/app01/templates/edit_article.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/app01/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app01/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/templatetags/custom_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/app01/templatetags/custom_tags.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app01/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app01/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,20 +31,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/software_proj/Article-Manager&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "E:/software_proj/Article-Manager",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.django.DjangoModulesConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\software_proj\Article-Manager\app01" />
@@ -96,8 +81,8 @@
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DJANGO_SETTINGS_MODULE" value="Article_Manager.settings" />
       </envs>
-      <option name="SDK_HOME" value="D:\anaconda\python.exe" />
-      <option name="SDK_NAME" value="Python 3.9" />
+      <option name="SDK_HOME" value="C:\Users\97854\.conda\envs\Article_Manager\python.exe" />
+      <option name="SDK_NAME" value="Python 3.10 (Article_Manager)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -141,6 +126,7 @@
       <workItem from="1719066858053" duration="5593000" />
       <workItem from="1719077306137" duration="1868000" />
       <workItem from="1719543112508" duration="6694000" />
+      <workItem from="1719925476766" duration="102000" />
     </task>
     <task id="LOCAL-00001" summary="djx">
       <created>1719550875465</created>
